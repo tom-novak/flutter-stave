@@ -11,19 +11,20 @@ class Stave extends StatelessWidget {
 }
 
 class StavePainter extends CustomPainter {
-  static const lineWidth = 5.0;
-  static const spaceWidth = 15.0;
+  static const lineWidth = 2.0;
+  static const spaceWidth = 10.0;
 
   final Paint linePaint = Paint();
 
   StavePainter() {
     linePaint
       ..style = PaintingStyle.stroke
-      ..color = Color.fromARGB(255, 255, 255, 255)
+      ..strokeWidth = lineWidth
+      ..color = Color.fromARGB(255, 0, 0, 0)
       ..strokeCap = StrokeCap.square;
   }
 
-  double get containerWidth => 50.0;
+  double get containerWidth => 300.0;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -40,7 +41,7 @@ class StavePainter extends CustomPainter {
   }
 
   List<Offset> _lineOffsets(int line) {
-    var vertical = (lineWidth + spaceWidth) * line;
+    var vertical = (lineWidth + spaceWidth) * line + lineWidth / 2;
     return [Offset(0.0, vertical), Offset(containerWidth, vertical)];
   }
 }
