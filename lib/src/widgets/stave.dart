@@ -1,11 +1,40 @@
 import 'package:flutter/widgets.dart';
 
-class Stave extends StatelessWidget {
+class Stave extends StatefulWidget {
+  @override
+  State createState() {
+    return _StaveState();
+  }
+}
+
+class _StaveState extends State<Stave> {
+  GlobalKey _keyStavePaint = GlobalKey();
+
+  double _heigth = 640;
+  double _width = 320;
+
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback(_onPostFrameCallback);
+    super.initState();
+  }
+
+  void _onPostFrameCallback(Duration duration) {
+    var renderObject =
+        _keyStavePaint.currentContext.findRenderObject() as RenderBox;
+    setState(() {
+      _width = renderObject.size.width;
+      _heigth = renderObject.size.height;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: StavePainter(),
+      key: _keyStavePaint,
+      painter: StavePainter(
+        width: _width,
+        height: _heigth,
+      ),
     );
   }
 }
@@ -13,10 +42,19 @@ class Stave extends StatelessWidget {
 class StavePainter extends CustomPainter {
   static const lineWidth = 2.0;
   static const spaceWidth = 10.0;
+  static const defaultPadding = 0.0;
+
+  final double width;
+  final double height;
+  final double padding;
 
   final Paint linePaint = Paint();
 
-  StavePainter() {
+  StavePainter({
+    @required this.width,
+    @required this.height,
+    this.padding = defaultPadding,
+  }) {
     linePaint
       ..style = PaintingStyle.stroke
       ..strokeWidth = lineWidth
@@ -24,7 +62,9 @@ class StavePainter extends CustomPainter {
       ..strokeCap = StrokeCap.square;
   }
 
-  double get containerWidth => 300.0;
+  Offset get _paintStart => Offset(padding, padding);
+
+  double get _paintWidth => width - padding * 2;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -41,7 +81,10 @@ class StavePainter extends CustomPainter {
   }
 
   List<Offset> _lineOffsets(int line) {
-    var vertical = (lineWidth + spaceWidth) * line + lineWidth / 2;
-    return [Offset(0.0, vertical), Offset(containerWidth, vertical)];
+    var vertical = (lineWidth + spaceWidth) * line + lineWidth / 2 + padding;
+    return [
+      Offset(_paintStart.dx, vertical),
+      Offset(width - padding, vertical)
+    ];
   }
 }
