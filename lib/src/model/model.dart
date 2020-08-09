@@ -1,22 +1,49 @@
-class Note {
-  final Pitch pitch;
-  final Type type;
+import 'package:flutter/cupertino.dart';
 
-  Note({this.pitch, this.type});
+enum ScoreType {
+  partwise,
+  timewise,
 }
 
-class Pitch {
-  final Step step;
-  final int octave;
+class Score {
+  final ScoreType type;
+  final String version;
+  final List<Part> parts;
 
-  Pitch({this.step, this.octave});
+  Score({@required this.type, this.version, this.parts});
+}
+
+enum Clef {
+  treble,
+  bass,
 }
 
 class Time {
   final int beats;
   final int beatType;
 
-  Time({this.beats, this.beatType});
+  Time({@required this.beats, @required this.beatType});
+}
+
+class Attributes {
+  final Time time;
+  final Clef clef;
+
+  Attributes({@required this.time,@required this.clef});
+}
+
+class Measure {
+  final Attributes attributes;
+  final List<Note> notes;
+
+  Measure({this.attributes, this.notes});
+}
+
+class Part {
+  final String id;
+  final List<Measure> measures;
+
+  Part({this.id, this.measures});
 }
 
 enum Step {
@@ -29,7 +56,14 @@ enum Step {
   g,
 }
 
-enum Type {
+class Pitch {
+  final Step step;
+  final int octave;
+
+  Pitch({this.step, this.octave});
+}
+
+enum NoteType {
   whole,
   half,
   quarter,
@@ -39,9 +73,11 @@ enum Type {
   sixtyFourth,
 }
 
-enum Clef {
-  treble,
-  bass,
+class Note {
+  final Pitch pitch;
+  final NoteType type;
+
+  Note({this.pitch, this.type});
 }
 
 enum Rest {

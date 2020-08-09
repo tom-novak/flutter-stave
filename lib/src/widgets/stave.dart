@@ -1,10 +1,13 @@
 import 'package:flutter/widgets.dart';
+import 'package:stave/src/model/model.dart';
 
 class Stave extends StatefulWidget {
+  final Score score;
+
+  Stave(this.score);
+
   @override
-  State createState() {
-    return _StaveState();
-  }
+  State createState() => _StaveState();
 }
 
 class _StaveState extends State<Stave> {
