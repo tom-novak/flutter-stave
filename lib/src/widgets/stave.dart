@@ -69,7 +69,7 @@ class _StaveState extends State<Stave> {
     WidgetsBinding.instance.addPostFrameCallback(_onPostFrameCallback);
     getSvg().then((value) {
       setState(() {
-        picture = value.toPicture(size: Size(15, 10));
+        picture = value.toPicture(size: Size(StavePainter.spaceWidth * 1.5, StavePainter.spaceWidth));
       });
     });
     super.initState();
@@ -98,7 +98,7 @@ class _StaveState extends State<Stave> {
 }
 
 class StavePainter extends CustomPainter {
-  static const lineWidth = 2.0;
+  static const lineWidth = 1.0;
   static const spaceWidth = 10.0;
   static const defaultPadding = 0.0;
 
