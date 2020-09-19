@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
@@ -69,7 +68,8 @@ class _StaveState extends State<Stave> {
     WidgetsBinding.instance.addPostFrameCallback(_onPostFrameCallback);
     getSvg().then((value) {
       setState(() {
-        picture = value.toPicture(size: Size(StavePainter.spaceWidth * 1.5, StavePainter.spaceWidth));
+        picture = value.toPicture(
+            size: Size(StavePainter.spaceWidth * 1.5, StavePainter.spaceWidth));
       });
     });
     super.initState();
